@@ -1,0 +1,40 @@
+.main {
+	background: #ffb76b;
+	background: linear-gradient(
+		to top left,
+		#ffb76b 0%,
+		#ffa73d 30%,
+		#ff7c00 60%,
+		#ff7f04 100%
+	);
+	min-height: 100vh;
+	padding: 3rem 1rem;
+}
+
+.main h1 {
+	text-align: center;
+	font-size: clamp(1.5rem, 4vw, 3rem);
+	background: #f6f8f9;
+	background: radial-gradient(
+		circle farthest-corner at center center,
+		#f6f8f9 0%,
+		#e5ebee 30%,
+		#d7dee3 60%,
+		#f5f7f9 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	min-height: 50px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.events {
+	padding: 2rem 1rem;
+}
+
+@media screen and (max-width: 500px) {
+	.events {
+		padding: 1rem;
+	}
+}

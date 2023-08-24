@@ -1,0 +1,54 @@
+.navbar {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	padding: 1rem 0;
+	background-color: black;
+}
+
+.navbarBrand a {
+	color: white;
+	margin-left: 10px;
+	font-size: clamp(1.5rem, 2.5vw, 4rem);
+	text-decoration: none;
+}
+
+.navbarLinks {
+	flex-grow: 1;
+	margin-right: 10px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.navbarLinks a {
+	display: block;
+	text-decoration: none;
+	color: white;
+	margin: 0 10px;
+	font-size: clamp(1rem, 2.5vw, 2rem);
+}
+
+.navbarLinks a:hover {
+	color: grey;
+}
+
+@media screen and (max-width: 768px) {
+	.navbar {
+		flex-direction: column;
+	}
+
+	.navbarBrand {
+		margin-bottom: 5px;
+	}
+
+	.navbarBrand a {
+		margin: 0;
+		display: block;
+		text-align: center;
+	}
+
+	.navbarLinks {
+		margin: 0;
+		justify-content: center;
+	}
+}
