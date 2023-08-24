@@ -1,0 +1,53 @@
+.main {
+	background: #ffb76b;
+	background: linear-gradient(
+		to top left,
+		#ffb76b 0%,
+		#ffa73d 30%,
+		#ff7c00 60%,
+		#ff7f04 100%
+	);
+	min-height: 100vh;
+	padding: 3rem 1rem;
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.tabs {
+	/* border: 1px solid white; */
+	margin-bottom: 20px;
+}
+
+.tabs button {
+	border: 3px solid black;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 1.3rem;
+	background-color: #e6bf9a;
+	padding: 0.5rem 0.8rem;
+	width: 120px;
+	text-align: center;
+}
+
+.tabs button:disabled {
+	background-color: #ffb76b;
+	font-weight: 100;
+}
+
+.login_btn {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-right-width: 1px !important;
+}
+
+.active_btn {
+	color: #04ff0c;
+}
+
+.signup_btn {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-left-width: 1px !important;
+}

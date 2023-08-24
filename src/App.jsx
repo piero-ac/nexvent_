@@ -6,6 +6,7 @@ import {
 import RootLayout from "./pages/RootLayout";
 import Home from "./pages/HomePage";
 import Events from "./pages/EventsPage";
+import Login from "./pages/LoginPage";
 
 const router = createBrowserRouter([
 	{
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
 			{
 				path: "events",
 				element: <Events />,
+			},
+			{
+				path: "login",
+				element: <Login />,
 			},
 		],
 	},
