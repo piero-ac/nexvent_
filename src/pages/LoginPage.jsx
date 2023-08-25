@@ -24,12 +24,20 @@ const Login = () => {
 				</button>
 			</section>
 			<section className={classes.form_section}>
-				<Form
-					method="POST"
-					action={formType === "login" ? "/login" : "/signup"}
-				>
-					<input type="email" placeholder="Enter email here..." required />
+				<Form method="post">
 					<input
+						name="intent"
+						type="hidden"
+						value={formType === "login" ? "login" : "signup"}
+					/>
+					<input
+						name="email"
+						type="email"
+						placeholder="Enter email here..."
+						required
+					/>
+					<input
+						name="password"
 						type="password"
 						placeholder="Enter password here..."
 						required
@@ -42,5 +50,22 @@ const Login = () => {
 		</main>
 	);
 };
+
+export async function action({ request }) {
+	const formData = Object.fromEntries(await request.formData());
+
+	if (formData.intent === "login") {
+		console.log("Login Action");
+		console.log(formData.email);
+		console.log(formData.password);
+	} else if (formData.intent === "signup") {
+		console.log("Signup Action");
+		console.log(formData.email);
+		console.log(formData.password);
+	}
+
+	// actions should return a value or null
+	return null;
+}
 
 export default Login;
