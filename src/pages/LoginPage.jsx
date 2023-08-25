@@ -24,7 +24,7 @@ const Login = () => {
 				</button>
 			</section>
 			<section className={classes.form_section}>
-				<h2>{formType === "login" ? "Login" : "Signup"}</h2>
+				{/* <h2>{formType === "login" ? "Login" : "Signup"}</h2> */}
 				<Form
 					method="POST"
 					action={formType === "login" ? "/login" : "/signup"}
