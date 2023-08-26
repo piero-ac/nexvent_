@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import RootLayout from "./pages/RootLayout";
 import Home from "./pages/HomePage";
-import Events from "./pages/EventsPage";
+import Events, { loader as eventsLoader } from "./pages/EventsPage";
 import Login, { action as loginAction } from "./pages/LoginPage";
 
 const router = createBrowserRouter([
@@ -20,6 +20,7 @@ const router = createBrowserRouter([
 			{
 				path: "events",
 				element: <Events />,
+				loader: eventsLoader,
 			},
 			{
 				path: "login",
