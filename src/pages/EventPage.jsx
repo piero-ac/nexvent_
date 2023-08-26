@@ -14,11 +14,11 @@ const Event = () => {
 
 			<section className={classes.event}>
 				<article className={classes.details}>
-					<div>
-						<img src="https://picsum.photos/200" />
+					<div className={classes.event_image}>
+						<img src="https://picsum.photos/1920/1080" />
 					</div>
 					<div>
-						<h2>Details</h2>
+						<h2>Description</h2>
 						<p>
 							Make real friends without needing to go out, buy drinks, or come
 							up with things to talk about!
@@ -39,16 +39,22 @@ const Event = () => {
 							<img src={clockSvg} width={40} />
 						</div>
 						<div>
-							<p>Thursday, Sep 7, 2023</p>
+							<p>
+								<span className={classes.time_item_title}>
+									Thursday, Sep 7, 2023
+								</span>
+							</p>
 							<p>12:00 PM</p>
 						</div>
 					</div>
 					<div className={classes.time_item}>
 						<div>
-							<img src={locationSvg} width={45} />
+							<img src={locationSvg} width={40} />
 						</div>
 						<div>
-							<p>Online Event</p>
+							<p>
+								<span className={classes.time_item_title}>Online Event</span>
+							</p>
 							<p>Link visible for attendees</p>
 						</div>
 					</div>
