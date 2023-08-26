@@ -24,7 +24,7 @@ const Login = () => {
 				</button>
 			</section>
 			<section className={classes.form_section}>
-				<Form method="post">
+				<Form method="post" className={classes.form}>
 					<input
 						name="intent"
 						type="hidden"
