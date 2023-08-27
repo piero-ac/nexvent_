@@ -17,18 +17,14 @@ const Event = () => {
 					<div className={classes.event_image}>
 						<img src="https://picsum.photos/1920/1080" />
 					</div>
-					<div>
+					<div className={classes.event_description}>
 						<h2>Description</h2>
 						<p>
 							Make real friends without needing to go out, buy drinks, or come
-							up with things to talk about!
-						</p>
-						<p>
-							Event Zoom link will be shared via email, so don&apos;t forget to
-							subscribe to Meetup event notifications!
-						</p>
-						<p>
-							We&apos;ll do our best to connect you with people in your area*
+							up with things to talk about! Event Zoom link will be shared via
+							email, so don&apos;t forget to subscribe to Meetup event
+							notifications! We&apos;ll do our best to connect you with people
+							in your area.
 						</p>
 						<p>Duration 90 mins</p>
 					</div>
