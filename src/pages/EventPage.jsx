@@ -1,11 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import classes from "../styling/EventPage.module.css";
 import clockSvg from "../assets/clock-svgrepo-com.svg";
 import locationSvg from "../assets/location-pin-alt-1-svgrepo-com.svg";
+
 const Event = () => {
+	const navigate = useNavigate();
 	const { eventId } = useParams();
 	return (
 		<main className={classes.main}>
+			<div className={classes.back}>
+				<button onClick={() => navigate("/events")}>Back</button>
+			</div>
 			<header className={classes.header}>
 				<h1>{eventId}</h1>
 				<p>Hosted By</p>
@@ -26,7 +31,19 @@ const Event = () => {
 							notifications! We&apos;ll do our best to connect you with people
 							in your area.
 						</p>
-						<p>Duration 90 mins</p>
+						<p>
+							<span className={classes.event_duration}>Duration 90 mins</span>
+						</p>
+					</div>
+					<div className={classes.event_description}>
+						<h2>Attendees</h2>
+						<p>90 people attending</p>
+						{/* <div className={classes.user_icons}>
+
+            </div> */}
+					</div>
+					<div className={classes.event_signup}>
+						<button>Attend</button>
 					</div>
 				</article>
 				<article className={classes.event_time}>
@@ -53,6 +70,9 @@ const Event = () => {
 							</p>
 							<p>Link visible for attendees</p>
 						</div>
+					</div>
+					<div className={classes.event_signup}>
+						<button>Attend</button>
 					</div>
 				</article>
 			</section>
