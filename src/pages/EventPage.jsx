@@ -1,18 +1,21 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, json, useLoaderData } from "react-router-dom";
 import classes from "../styling/EventPage.module.css";
 import clockSvg from "../assets/clock-svgrepo-com.svg";
 import locationSvg from "../assets/location-pin-alt-1-svgrepo-com.svg";
+import formatTimestamp from "../utils/formatTimestamp";
 
 const Event = () => {
 	const navigate = useNavigate();
-	const { eventId } = useParams();
+	const data = useLoaderData();
+	const { event } = data;
+	const { date, time } = formatTimestamp(event.event_date);
 	return (
 		<main className={classes.main}>
 			<div className={classes.back}>
 				<button onClick={() => navigate("/events")}>Back</button>
 			</div>
 			<header className={classes.header}>
-				<h1>{eventId}</h1>
+				<h1>{event.event_name}</h1>
 				<p>Hosted By</p>
 				<p>TBD</p>
 			</header>
@@ -24,23 +27,12 @@ const Event = () => {
 					</div>
 					<div className={classes.event_description}>
 						<h2>Description</h2>
-						<p>
-							Make real friends without needing to go out, buy drinks, or come
-							up with things to talk about! Event Zoom link will be shared via
-							email, so don&apos;t forget to subscribe to Meetup event
-							notifications! We&apos;ll do our best to connect you with people
-							in your area.
-						</p>
-						<p>
-							<span className={classes.event_duration}>Duration 90 mins</span>
-						</p>
+						<p>{event.event_description}</p>
 					</div>
 					<div className={classes.event_description}>
 						<h2>Attendees</h2>
-						<p>90 people attending</p>
-						{/* <div className={classes.user_icons}>
-
-            </div> */}
+						<p>{event.number_of_attendees} Attendees</p>
+						{/** Include some attendees icons */}
 					</div>
 					<div className={classes.event_signup}>
 						<button>Attend</button>
@@ -53,11 +45,9 @@ const Event = () => {
 						</div>
 						<div>
 							<p>
-								<span className={classes.time_item_title}>
-									Thursday, Sep 7, 2023
-								</span>
+								<span className={classes.time_item_title}>{date}</span>
 							</p>
-							<p>12:00 PM</p>
+							<p>{time}</p>
 						</div>
 					</div>
 					<div className={classes.time_item}>
@@ -68,7 +58,6 @@ const Event = () => {
 							<p>
 								<span className={classes.time_item_title}>Online Event</span>
 							</p>
-							<p>Link visible for attendees</p>
 						</div>
 					</div>
 					<div className={classes.event_signup}>
@@ -80,4 +69,13 @@ const Event = () => {
 	);
 };
 
+export async function loader({ params }) {
+	const { eventId } = params;
+	const response = await fetch("http://localhost:3000/event/" + eventId);
+	if (!response.ok) {
+		throw json({ message: "Could not fetch events." }, { status: 500 });
+	} else {
+		return response;
+	}
+}
 export default Event;
