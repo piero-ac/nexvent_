@@ -36,11 +36,8 @@
 }
 
 .header {
-	/* border: 1px solid white; */
-	/* align-self: flex-start; */
-	/* margin-left: 8rem; */
 	margin-bottom: 20px;
-	max-width: 80%;
+	max-width: 70%;
 }
 
 .header h1 {
@@ -51,6 +48,7 @@
 
 .header p {
 	font-size: clamp(1rem, 5vw, 2rem);
+	margin-left: 15px;
 }
 
 .event {
@@ -116,11 +114,6 @@
 .event_description p {
 	word-wrap: break-word;
 	margin-top: 10px;
-}
-
-.event_description .event_duration {
-	font-weight: bold;
-	font-size: 1.2rem;
 }
 
 .details {
@@ -192,6 +185,10 @@
 }
 
 @media screen and (max-width: 778px) {
+	.header {
+		max-width: 90%;
+		text-align: center;
+	}
 	.event {
 		max-width: 100%;
 	}
