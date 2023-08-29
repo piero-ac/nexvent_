@@ -7,7 +7,7 @@ import RootLayout from "./pages/RootLayout";
 import Home from "./pages/HomePage";
 import Events, { loader as eventsLoader } from "./pages/EventsPage";
 import Login, { action as loginAction } from "./pages/LoginPage";
-import Event from "./pages/EventPage";
+import Event, { loader as eventLoader } from "./pages/EventPage";
 
 const router = createBrowserRouter([
 	{
@@ -31,6 +31,7 @@ const router = createBrowserRouter([
 			{
 				path: "event/:eventId",
 				element: <Event />,
+				loader: eventLoader,
 			},
 		],
 	},
