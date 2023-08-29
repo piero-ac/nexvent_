@@ -5,6 +5,7 @@ import formatTimestamp from "../utils/formatTimestamp";
 
 const EventItem = ({ event }) => {
 	const navigate = useNavigate();
+	const { date } = formatTimestamp(event.event_date);
 
 	const title =
 		event.event_name.length > 25
@@ -22,7 +23,7 @@ const EventItem = ({ event }) => {
 				/>
 			</div>
 			<div className={classes.eventInformation}>
-				<p>{formatTimestamp(event.event_date)}</p>
+				<p>{date}</p>
 				<p>
 					<span className={classes.eventTitle}>{title}</span>
 				</p>
