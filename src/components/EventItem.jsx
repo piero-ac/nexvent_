@@ -36,7 +36,7 @@ const EventItem = ({ event }) => {
 				<p>{event.number_of_attendees} Attendees</p>
 			</div>
 			<div className={classes.eventNavigate}>
-				<button onClick={() => navigate(`/event/${event.document_id}`)}>
+				<button onClick={() => navigate(`${event.document_id}`)}>
 					Let&apos;s Go
 				</button>
 			</div>
