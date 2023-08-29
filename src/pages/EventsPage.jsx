@@ -5,12 +5,11 @@ import EventItem from "../components/EventItem";
 
 const Events = () => {
 	const data = useLoaderData();
-	console.log(data.events);
 
 	return (
 		<main className={classes.main}>
 			<h1>
-				<span>234</span> events waiting for you!
+				<span>{data.events.length}</span> events waiting for you!
 			</h1>
 			<FiltersForm />
 			<section className={classes.events}>
