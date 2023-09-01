@@ -37,7 +37,8 @@
 	border: none;
 }
 
-.navbarLinks a:hover {
+.navbarLinks a:hover,
+.navbarLinks button:hover {
 	color: grey;
 }
 
