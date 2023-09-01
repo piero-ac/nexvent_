@@ -1,11 +1,10 @@
-import { Client, Account } from "appwrite";
-
-export const API_ENDPOINT = "https://cloud.appwrite.io/v1";
-export const PROJECT_ID = "YOU PROJECT ID HERE";
+import { Client, Account, Databases } from "appwrite";
 
 const client = new Client()
-	.setEndpoint("https://cloud.appwrite.io/v1")
-	.setProject("64e3a2385e7b323e2a69");
+	.setEndpoint(import.meta.env.VITE_APPWRITE_SERVER)
+	.setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
+
+export const db = new Databases(Client);
 
 export const account = new Account(client);
 
