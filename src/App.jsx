@@ -4,6 +4,7 @@ import Home from "./pages/HomePage";
 import Login from "./pages/LoginPage";
 import Profile from "./pages/ProfilePage";
 import PrivateRoutes from "./pages/PrivateRoutesLayout";
+import NewEvent from "./pages/NewEventPage";
 
 const router = createBrowserRouter([
 	{
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
 				path: "profile",
 				element: <PrivateRoutes />,
 				children: [{ index: true, element: <Profile /> }],
+			},
+			{
+				path: "new",
+				element: <PrivateRoutes />,
+				children: [{ index: true, element: <NewEvent /> }],
 			},
 		],
 	},
