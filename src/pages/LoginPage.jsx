@@ -1,9 +1,46 @@
-import { useState } from "react";
-import { Form } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../utils/AuthContext";
 import classes from "../styling/LoginPage.module.css";
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [formType, setFormType] = useState("login");
+	const { user, loginUser, registerUser } = useAuth();
+	const form = useRef(null);
+
+	useEffect(() => {
+		if (user) {
+			navigate("/");
+		}
+	}, [user, navigate]);
+
+	const handleLogin = (e) => {
+		e.preventDefault();
+
+		const email = form.current.email.value;
+		const password = form.current.password.value;
+
+		const userInfo = { email, password };
+
+		loginUser(userInfo);
+	};
+
+	const handleRegister = (e) => {
+		e.preventDefault();
+		const name = form.current.name.value;
+		const email = form.current.email.value;
+		const password1 = form.current.password.value;
+		const password2 = form.current.passwordConfirm.value;
+
+		if (password1 !== password2) {
+			alert("Passwords did not match");
+			return;
+		}
+
+		const userInfo = { name, email, password1, password2 };
+		registerUser(userInfo);
+	};
 
 	return (
 		<main className={classes.main}>
@@ -24,12 +61,19 @@ const Login = () => {
 				</button>
 			</section>
 			<section className={classes.form_section}>
-				<Form method="post" className={classes.form}>
-					<input
-						name="intent"
-						type="hidden"
-						value={formType === "login" ? "login" : "signup"}
-					/>
+				<form
+					ref={form}
+					className={classes.form}
+					onSubmit={formType === "login" ? handleLogin : handleRegister}
+				>
+					{formType === "signup" && (
+						<input
+							name="name"
+							type="text"
+							placeholder="Enter name here..."
+							required
+						/>
+					)}
 					<input
 						name="email"
 						type="email"
@@ -42,30 +86,21 @@ const Login = () => {
 						placeholder="Enter password here..."
 						required
 					/>
+					{formType === "signup" && (
+						<input
+							name="passwordConfirm"
+							type="password"
+							placeholder="Confirm password"
+							required
+						/>
+					)}
 					<button type="submit">
 						{formType === "login" ? "Login" : "Signup"}
 					</button>
-				</Form>
+				</form>
 			</section>
 		</main>
 	);
 };
-
-export async function action({ request }) {
-	const formData = Object.fromEntries(await request.formData());
-
-	if (formData.intent === "login") {
-		console.log("Login Action");
-		console.log(formData.email);
-		console.log(formData.password);
-	} else if (formData.intent === "signup") {
-		console.log("Signup Action");
-		console.log(formData.email);
-		console.log(formData.password);
-	}
-
-	// actions should return a value or null
-	return null;
-}
 
 export default Login;
