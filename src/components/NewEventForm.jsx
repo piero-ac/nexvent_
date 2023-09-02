@@ -59,23 +59,29 @@ const NewEventForm = () => {
 				</fieldset>
 				<fieldset>
 					<legend>Categories</legend>
-					<input type="checkbox" name="hobbies_passions" />
+					<input type="checkbox" name="category" value="hobbies_passions" />
 					<label htmlFor="hobbies_passions">Hobbies & Passions</label>
 					<br />
-					<input type="checkbox" name="technology" />
+					<input type="checkbox" name="category" value="technology" />
 					<label htmlFor="technology">Technology</label>
 					<br />
-					<input type="checkbox" name="career_business" />
+					<input type="checkbox" name="category" value="career_business" />
 					<label htmlFor="career_business">Career & Business</label>
 				</fieldset>
 				<label htmlFor="eventDateTime">Date and Time</label>
-				<input type="datetime-local" id="eventDateTime" name="eventDateTime" />
+				<input
+					type="datetime-local"
+					id="eventDateTime"
+					name="eventDateTime"
+					required
+				/>
 				<label htmlFor="eventLocation">Location</label>
 				<input
 					type="text"
 					id="eventLocation"
 					name="eventLocation"
 					disabled={eventType === "online"}
+					required
 				/>
 				<label htmlFor="eventAdditionalInfo">
 					Additional Information (Ticketing, Event Duration, etc.)
@@ -83,6 +89,7 @@ const NewEventForm = () => {
 				<textarea
 					id="eventAdditionalInfo"
 					name="eventAdditionalInfo"
+					maxLength={250}
 				></textarea>
 				<label htmlFor="eventImage">Event Image (imgur links only)</label>
 				<input type="text" id="eventImage" name="eventImage" />
