@@ -1,17 +1,63 @@
 import { useRef, useState } from "react";
 import classes from "../styling/NewEventForm.module.css";
+import { useAuth } from "../utils/AuthContext";
+import { db, NEXVENT_DB_ID, NEXVENT_EVENTS_COL_ID } from "../appwriteConfig";
+import { ID } from "appwrite";
 
 const NewEventForm = () => {
 	const form = useRef(null);
 	const [eventType, setEventType] = useState("online");
+	const { user } = useAuth();
 
 	const onOptionChange = (e) => {
 		setEventType(e.target.value);
 	};
 
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		const eventTitle = form.current.eventTitle.value;
+		const eventDescription = form.current.eventDescription.value;
+		const eventType = form.current.eventType.value;
+		const checkboxes = form.current.querySelectorAll(
+			'input[type="checkbox"]:checked'
+		);
+		const eventCategory = Array.from(checkboxes).map(
+			(checkbox) => checkbox.value
+		);
+		const eventDateTime = form.current.eventDateTime.value;
+		const eventLocation = form.current.eventLocation.value || "NA";
+		const eventAdditionalInfo = form.current.eventAdditionalInfo.value || "NA";
+		const eventImage = form.current.eventImage.value;
+
+		const eventData = {
+			eventTitle,
+			eventDescription,
+			eventType,
+			eventCategory,
+			eventDateTime,
+			eventLocation,
+			eventAdditionalInfo,
+			eventImage,
+			createdBy: user.$id,
+		};
+
+		// console.log(eventData);
+
+		try {
+			const response = await db.createDocument(
+				NEXVENT_DB_ID,
+				NEXVENT_EVENTS_COL_ID,
+				ID.unique(),
+				eventData
+			);
+			console.log("RESPONSE", response);
+			form.current.reset();
+			alert(`Your Event: "${eventTitle}" has been created! `);
+		} catch (err) {
+			console.error(err);
+		}
+
+		// console.log(eventData);
 	};
 
 	return (
@@ -59,13 +105,17 @@ const NewEventForm = () => {
 				</fieldset>
 				<fieldset>
 					<legend>Categories</legend>
-					<input type="checkbox" name="category" value="hobbies_passions" />
+					<input
+						type="checkbox"
+						name="eventCategory"
+						value="hobbies_passions"
+					/>
 					<label htmlFor="hobbies_passions">Hobbies & Passions</label>
 					<br />
-					<input type="checkbox" name="category" value="technology" />
+					<input type="checkbox" name="eventCategory" value="technology" />
 					<label htmlFor="technology">Technology</label>
 					<br />
-					<input type="checkbox" name="category" value="career_business" />
+					<input type="checkbox" name="eventCategory" value="career_business" />
 					<label htmlFor="career_business">Career & Business</label>
 				</fieldset>
 				<label htmlFor="eventDateTime">Date and Time</label>
