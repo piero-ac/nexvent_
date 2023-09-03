@@ -1,7 +1,13 @@
 import { useRef, useState } from "react";
 import classes from "../styling/NewEventForm.module.css";
 import { useAuth } from "../utils/AuthContext";
-import { db, NEXVENT_DB_ID, NEXVENT_EVENTS_COL_ID } from "../appwriteConfig";
+import {
+	db,
+	storage,
+	NEXVENT_DB_ID,
+	NEXVENT_EVENTS_COL_ID,
+	NEXVENT_BUCKET_ID,
+} from "../appwriteConfig";
 import { ID } from "appwrite";
 
 const NewEventForm = () => {
@@ -27,7 +33,7 @@ const NewEventForm = () => {
 		const eventDateTime = form.current.eventDateTime.value;
 		const eventLocation = form.current.eventLocation.value || "NA";
 		const eventAdditionalInfo = form.current.eventAdditionalInfo.value || "NA";
-		const eventImage = form.current.eventImage.value;
+		const eventImage = document.getElementById("eventImage").files[0];
 
 		const eventData = {
 			eventTitle,
@@ -41,23 +47,29 @@ const NewEventForm = () => {
 			createdBy: user.$id,
 		};
 
-		// console.log(eventData);
+		console.log(eventData);
 
 		try {
+			const fileResponse = await storage.createFile(
+				NEXVENT_BUCKET_ID,
+				ID.unique(),
+				eventImage
+			);
+			// console.log(fileResponse);
+
 			const response = await db.createDocument(
 				NEXVENT_DB_ID,
 				NEXVENT_EVENTS_COL_ID,
 				ID.unique(),
-				eventData
+				{ ...eventData, eventImage: fileResponse.$id }
 			);
-			console.log("RESPONSE", response);
+
+			// console.log("RESPONSE", response);
 			form.current.reset();
 			alert(`Your Event: "${eventTitle}" has been created! `);
 		} catch (err) {
 			console.error(err);
 		}
-
-		// console.log(eventData);
 	};
 
 	return (
@@ -141,8 +153,16 @@ const NewEventForm = () => {
 					name="eventAdditionalInfo"
 					maxLength={250}
 				></textarea>
-				<label htmlFor="eventImage">Event Image (imgur links only)</label>
-				<input type="text" id="eventImage" name="eventImage" />
+				<label htmlFor="eventImage">
+					Upload Event Image (Max 5MB) (PNG, JPG, JPEG)
+				</label>
+				<input
+					type="file"
+					id="eventImage"
+					name="eventImage"
+					accept=".jpg,.png,.jpeg"
+					required
+				/>
 				<button type="submit">Create</button>
 			</form>
 		</div>
