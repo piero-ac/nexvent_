@@ -7,10 +7,13 @@ import {
 	NEXVENT_DB_ID,
 	NEXVENT_EVENTS_COL_ID,
 	NEXVENT_BUCKET_ID,
+	NEXVENT_EVENT_ATTENDEES_COL_ID,
 } from "../appwriteConfig";
 import { ID } from "appwrite";
+import { useNavigate } from "react-router-dom";
 
 const NewEventForm = () => {
+	const navigate = useNavigate();
 	const form = useRef(null);
 	const [eventType, setEventType] = useState("online");
 	const { user } = useAuth();
@@ -44,12 +47,14 @@ const NewEventForm = () => {
 			eventLocation,
 			eventAdditionalInfo,
 			eventImage,
+			eventCreatorName: user.name,
 			createdBy: user.$id,
 		};
 
 		console.log(eventData);
 
 		try {
+			// Store Event Image
 			const fileResponse = await storage.createFile(
 				NEXVENT_BUCKET_ID,
 				ID.unique(),
@@ -57,16 +62,34 @@ const NewEventForm = () => {
 			);
 			// console.log(fileResponse);
 
-			const response = await db.createDocument(
+			// Create document for event
+			const eventResponse = await db.createDocument(
 				NEXVENT_DB_ID,
 				NEXVENT_EVENTS_COL_ID,
 				ID.unique(),
 				{ ...eventData, eventImage: fileResponse.$id }
 			);
 
+			// Create document for event attendees
+			const attendeesResponse = await db.createDocument(
+				NEXVENT_DB_ID,
+				NEXVENT_EVENT_ATTENDEES_COL_ID,
+				ID.unique(),
+				{ eventId: eventResponse.$id, attendees: [user.$id] }
+			);
+
+			// Update eventAttendees attribute in created event document
+			await db.updateDocument(
+				NEXVENT_DB_ID,
+				NEXVENT_EVENTS_COL_ID,
+				eventResponse.$id,
+				{ eventAttendees: attendeesResponse.$id }
+			);
+
 			// console.log("RESPONSE", response);
 			form.current.reset();
-			alert(`Your Event: "${eventTitle}" has been created! `);
+			// alert(`Your Event: "${eventTitle}" has been created! `);
+			navigate(`/event/${eventResponse.$id}`);
 		} catch (err) {
 			console.error(err);
 		}
