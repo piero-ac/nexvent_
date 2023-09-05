@@ -25,7 +25,7 @@ function formatTimestamp(timestamp) {
 		"DEC",
 	];
 
-	const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+	const date = new Date(timestamp); // Convert seconds to milliseconds
 
 	const dayOfWeek = daysOfWeek[date.getUTCDay()];
 	const month = months[date.getUTCMonth()];
