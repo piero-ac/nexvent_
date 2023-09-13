@@ -64,7 +64,7 @@ const Event = () => {
 	return (
 		<main className={classes.main}>
 			<div className={classes.back}>
-				<button onClick={() => navigate("/")}>Back</button>
+				<button onClick={() => navigate("..")}>Back</button>
 			</div>
 			<header className={classes.header}>
 				<h1>{event.eventTitle}</h1>
