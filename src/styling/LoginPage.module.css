@@ -64,15 +64,16 @@
 	min-width: 350px;
 }
 
-form input {
+.form input {
 	height: 2rem;
 	width: 300px;
 	border-radius: 5px;
 	border: 3px ghostwhite inset;
 	font-size: 1.2rem;
+	padding: 0 0.2rem;
 }
 
-form button {
+.form button {
 	background-color: black;
 	margin-top: 10px;
 	color: #ff7c00;
