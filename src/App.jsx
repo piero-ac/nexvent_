@@ -6,6 +6,7 @@ import Profile from "./pages/ProfilePage";
 import EventPage from "./pages/EventPage";
 import PrivateRoutes from "./pages/PrivateRoutesLayout";
 import NewEvent from "./pages/NewEventPage";
+import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
 
 const router = createBrowserRouter([
 	{
@@ -31,11 +32,15 @@ const router = createBrowserRouter([
 				children: [{ index: true, element: <NewEvent /> }],
 			},
 			{
-				path: "event/:eventId",
-				// loader: () => {
-				// 	return redirect("/new");
-				// },
-				element: <EventPage />,
+				path: "events",
+				children: [
+					{
+						index: true,
+						element: <EventsPage />,
+						loader: eventsLoader,
+					},
+					{ path: ":eventId", element: <EventPage /> },
+				],
 			},
 		],
 	},
