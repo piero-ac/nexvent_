@@ -1,13 +1,12 @@
-import {
-	createBrowserRouter,
-	redirect,
-	RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./pages/RootLayout";
 import Home from "./pages/HomePage";
-import Events, { loader as eventsLoader } from "./pages/EventsPage";
-import Login, { action as loginAction } from "./pages/LoginPage";
-import Event, { loader as eventLoader } from "./pages/EventPage";
+import Login from "./pages/LoginPage";
+import Profile from "./pages/ProfilePage";
+import EventPage from "./pages/EventPage";
+import PrivateRoutes from "./pages/PrivateRoutesLayout";
+import NewEvent from "./pages/NewEventPage";
+import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
 
 const router = createBrowserRouter([
 	{
@@ -19,16 +18,29 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: "events",
-				children: [
-					{ index: true, element: <Events />, loader: eventsLoader },
-					{ path: ":eventId", element: <Event />, loader: eventLoader },
-				],
-			},
-			{
 				path: "login",
 				element: <Login />,
-				action: loginAction,
+			},
+			{
+				path: "profile",
+				element: <PrivateRoutes />,
+				children: [{ index: true, element: <Profile /> }],
+			},
+			{
+				path: "new",
+				element: <PrivateRoutes />,
+				children: [{ index: true, element: <NewEvent /> }],
+			},
+			{
+				path: "events",
+				children: [
+					{
+						index: true,
+						element: <EventsPage />,
+						loader: eventsLoader,
+					},
+					{ path: ":eventId", element: <EventPage /> },
+				],
 			},
 		],
 	},
