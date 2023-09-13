@@ -92,6 +92,8 @@ const NewEventForm = () => {
 			navigate(`/event/${eventResponse.$id}`);
 		} catch (err) {
 			console.error(err);
+			// Check which of the responses failed
+			// and delete up to that response the document that wascreated for it
 		}
 	};
 
