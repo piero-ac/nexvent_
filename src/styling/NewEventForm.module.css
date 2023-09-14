@@ -20,11 +20,15 @@
 	margin-bottom: 20px;
 }
 
+.red {
+	color: red;
+}
+
 .new_event_form {
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
-	row-gap: 5px;
+	row-gap: 10px;
 	width: 500px;
 	padding: 1rem;
 }
@@ -53,9 +57,14 @@ fieldset legend {
 		width: 450px;
 		padding: 0;
 	}
+
+	.new_event_form label,
+	fieldset legend {
+		font-size: 1rem;
+	}
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 490px) {
 	.new_event_form {
 		width: 350px;
 	}
@@ -63,4 +72,29 @@ fieldset legend {
 	.new_event {
 		padding: 0;
 	}
+
+	.new_event_form label,
+	fieldset legend {
+		font-size: 0.8rem;
+		color: #f6f8f9;
+	}
+}
+
+.two_cols {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+.event_information div {
+	margin-bottom: 5px;
+}
+
+.event_information .address_line {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.event_information .address_line input {
+	width: 300px;
 }
