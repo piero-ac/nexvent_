@@ -13,6 +13,7 @@ const MainNavigation = () => {
 			<div className={classes.navbarLinks}>
 				{user ? (
 					<>
+						<Link to="/events">Events</Link>
 						<Link to="/new">New</Link>
 						<Link to="/profile">Profile</Link>
 						<button onClick={logoutUser}>Logout</button>
