@@ -24,9 +24,9 @@
 	);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	min-height: 50px;
+	min-height: 60px;
 	font-weight: 500;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 }
 
 .events {
