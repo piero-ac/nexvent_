@@ -11,6 +11,8 @@ import {
 } from "../appwriteConfig";
 import { ID } from "appwrite";
 import { useNavigate } from "react-router-dom";
+import StateSelect from "./StateSelect";
+import { validateNewEventFormData } from "../utils/validation";
 
 const NewEventForm = () => {
 	const navigate = useNavigate();
@@ -43,15 +45,23 @@ const NewEventForm = () => {
 		const eventType = form.current.eventType.value;
 		const eventDateTime = form.current.eventDateTime.value;
 		const eventLocation =
-			eventType === "online" ? "NA" : form.current.eventLocation.value;
-		const eventAdditionalInfo =
-			form.current.eventAdditionalInfo.value.trim() || "NA";
+			eventType === "online"
+				? {
+						address1: "NA",
+						address2: "NA",
+						city: "NA",
+						state: "NA",
+						zipcode: "NA",
+				  }
+				: {
+						address1: form.current.address1.value,
+						address2: form.current.address2.value,
+						city: form.current.city.value,
+						state: form.current.state.value,
+						zipcode: form.current.zipcode.value,
+				  };
+		const eventAdditionalInfo = form.current.eventAdditionalInfo.value.trim();
 		const eventImage = document.getElementById("eventImage").files[0];
-
-		if (eventImage === undefined) {
-			console.error("No image selected");
-			return;
-		}
 
 		const eventData = {
 			eventTitle,
@@ -66,8 +76,30 @@ const NewEventForm = () => {
 			createdBy: user.$id,
 		};
 
-		console.log(eventData);
+		const validation = validateNewEventFormData(eventData);
 
+		if (!validation.isValid) {
+			// Form not submitted correctly
+			if (
+				validation.formError &&
+				validation.fields === null &&
+				validation.fieldErrors === null
+			) {
+				console.log(validation.formError);
+				return;
+			}
+			// Field Errors
+			if (
+				Object.values(validation.fieldErrors).some(Boolean) &&
+				validation.fields &&
+				validation.formError === null
+			) {
+				console.log(validation.fieldErrors);
+				return;
+			}
+		} else {
+			console.log("Form Valid");
+		}
 		// try {
 		// 	// Store Event Image
 		// 	const fileResponse = await storage.createFile(
@@ -209,14 +241,14 @@ const NewEventForm = () => {
 				>
 					<legend>Location</legend>
 					<div className={classes.address_line}>
-						<label htmlFor="address-1">
+						<label htmlFor="address1">
 							Address Line 1 <span className={classes.red}>*</span>
 						</label>
-						<input type="text" name="address-1" id="address-1" required />
+						<input type="text" name="address1" id="address1" required />
 					</div>
 					<div className={classes.address_line}>
-						<label htmlFor="address-2">Address Line 2</label>
-						<input type="text" name="address-2" id="address-2" />
+						<label htmlFor="address2">Address Line 2</label>
+						<input type="text" name="address2" id="address2" />
 					</div>
 					<div className={classes.address_line}>
 						<label htmlFor="city">
@@ -228,9 +260,7 @@ const NewEventForm = () => {
 						<label htmlFor="state">
 							State <span className={classes.red}>*</span>
 						</label>
-						<select name="state" id="state">
-							<option value="NJ">New Jersey (NJ)</option>
-						</select>
+						<StateSelect />
 					</div>
 					<div className={classes.address_line}>
 						<label htmlFor="zipcode">
